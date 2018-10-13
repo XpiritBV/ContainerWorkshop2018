@@ -64,6 +64,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Health
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks", "src\Extensions\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj", "{705CBAFE-9845-4502-95C3-F2D6352DF86E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{4896FB61-F30A-437D-A1C6-73921CC75520}"
+	ProjectSection(SolutionItems) = preProject
+		docs\images\AADApplicationID.png = docs\images\AADApplicationID.png
+		docs\images\AddContainerOrchestratorSupport.PNG = docs\images\AddContainerOrchestratorSupport.PNG
+		docs\images\AddDataConnection.PNG = docs\images\AddDataConnection.PNG
+		docs\images\AddDockerSupportTargetOS.png = docs\images\AddDockerSupportTargetOS.png
+		docs\images\ASPNETWithContainersVSTSBuildTemplate.png = docs\images\ASPNETWithContainersVSTSBuildTemplate.png
+		docs\images\AzureADAppRegistration.png = docs\images\AzureADAppRegistration.png
+		docs\images\AzureSQLDatabase.png = docs\images\AzureSQLDatabase.png
+		docs\images\BuildProcessVSTS.png = docs\images\BuildProcessVSTS.png
+		docs\images\CreateAppRegistration.png = docs\images\CreateAppRegistration.png
+		docs\images\DockerComposeVSTSTasks.png = docs\images\DockerComposeVSTSTasks.png
+		docs\images\DockerHubRegistry.png = docs\images\DockerHubRegistry.png
+		docs\images\DockerHubVSTSConnection.png = docs\images\DockerHubVSTSConnection.png
+		docs\images\dockerrunning.png = docs\images\dockerrunning.png
+		docs\images\dockertray.png = docs\images\dockertray.png
+		docs\images\EmptyDockerHub.png = docs\images\EmptyDockerHub.png
+		docs\images\KeyVaultDNSName.png = docs\images\KeyVaultDNSName.png
+		docs\images\NewVSTSConnection.png = docs\images\NewVSTSConnection.png
+		docs\images\PuTTYSessions.png = docs\images\PuTTYSessions.png
+		docs\images\PuTTYTunnels.png = docs\images\PuTTYTunnels.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +127,7 @@ Global
 		{0E68944E-80E9-441D-A1F3-88998A09FFDE} = {C94C2928-D205-4815-9740-048D6D8335BF}
 		{37207A02-6B4E-4410-AFA7-3224253C099E} = {0E68944E-80E9-441D-A1F3-88998A09FFDE}
 		{705CBAFE-9845-4502-95C3-F2D6352DF86E} = {0E68944E-80E9-441D-A1F3-88998A09FFDE}
+		{4896FB61-F30A-437D-A1C6-73921CC75520} = {FA099EBE-43F2-4822-9184-1B526233A4D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {488A3AF9-007C-4ECC-BE59-85DC840176C1}

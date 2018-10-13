@@ -13,7 +13,7 @@ Goals for this lab:
 We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 1 - Getting Started](Lab1-GettingStarted.md) to clone it now if you do not have the sources. Switch to the `Start` branch.
 
 > ##### Important
-> Make sure you have switched to the `Start` branch to use the right .NET solution. If you are still on the `master` branch, you will use the completed solution. 
+> Make sure you have switched to the `start` branch to use the right .NET solution. If you are still on the `master` branch, you will use the completed solution. 
 
 Open the solution `ContainerWorkshop.sln` in Visual Studio. Take your time to navigate the code and familiarize yourself with the various projects in the solution. You should be able to identify these:
 - `GamingWebApp`, an ASP.NET MVC Core frontend 
@@ -33,13 +33,17 @@ Make sure you know how this application is implemented. Set breakpoints if neces
 
 Visual Studio 2017 offers tooling for adding support to run your application in a Docker container. You will first add container support to the Web API project. 
 
-To get started you can right-click the Leaderboard.WebAPI project and select Add, Docker Support from the context menu. Choose Linux as the target operating system.
+To get started you can right-click the Leaderboard.WebAPI project and select Add, Container Orchestrator Support from the context menu. Choose `Docker Compose` as the local orchestrator from the dropdown.
+
+<img src="images/AddContainerOrchestratorSupport.png" width="400" />
+
+In the next dialog, choose `Linux` as the target operating system.
 
 <img src="images/AddDockerSupportTargetOS.png" width="400" />
 
 Observe the changes that Visual Studio makes to your solution.  
 
-Most noticeably you will see that a new Docker Compose project has been added with the name ```docker-compose```. It is now your start project for the solution. 
+Most noticeably you will see that a new Docker Compose project has been added with the name `docker-compose`. It is now your start project for the solution. 
 
 Inspect the contents of the `docker-compose.yml` and `docker-compose.override.yml` files if you haven't already. Ensure that you understand the meaning of the various entries in the YAML files.
 
@@ -57,24 +61,16 @@ Now that the projects are running from a Docker container, the application might
 > - Debug the call from the web page to the API by stepping through the code.
 > - Verify application settings for each of the projects. 
 
-The Web API and application need a couple of changes to make them work again. Here is your list of work that you need to do:
-1. Change the exposed port of the Web API container in the `docker-compose.override.yml` file to be 1337.
+Notice how the `docker-compose.override.yml` file contains some port mappings, defining the ports inside the container and the composition and outside of it:
 ```
 ports:
-  - "1337:1337"
-```
-2. Change the hosting URL of the Web API to be http://leaderboard.webapi:1337. Changing the port to 1337 is not required for fixing, but it clearly distinguishes the hosting in IIS Express (port 31741) from hosting in a Docker container (port 1337) and avoids port collision on port 80. 
-```
-environment:
-  - ASPNETCORE_ENVIRONMENT=Development
-  - ASPNETCORE_URLS=https://+:443;http://+:80
+  - "14069:80"
+  - "44325:443"
 ```
 
-> You will learn more on networking later on. For now, notice that the URL is not referring to `localhost` but `leaderboard.webapi` (the name of the Docker container service as defined in the `docker-compose.yml` file).
+> You will learn more on networking later on. For now, notice that the URL is not referring to `localhost` but `leaderboardwebapi` (the name of the Docker container service as defined in the `docker-compose.yml` file).
 
-3. Change the hosting port for the Web application to be 8080 instead of 80.
-
-4. Change the `LeaderboardWebApiBaseUrl` to point to the new endpoint of the Web API with the internal address `http://leaderboard.webapi:1337`. Choose the right place to make that change, considering that you are now running from Docker containers. 
+Change the `LeaderboardApiOptions:BaseUrl` setting to point to the new endpoint of the Web API with the internal address `http://leaderboard.webapi`. Choose the right place to make that change, considering that you are now running from Docker containers. 
   
 > ##### Hint
 > Changing the setting in the `appsettings.json` file will work and you could choose to do so for now. It does mean that the setting for running without container will not work anymore. So, what other place can you think of that might work? Use that instead if you know, or just change `appsettings.json`.
@@ -83,10 +79,10 @@ environment:
 gamingwebapp:
   environment:
     - ASPNETCORE_ENVIRONMENT=Development
-    - LeaderboardWebApiBaseUrl=http://leaderboard.webapi:1337
+    - LeaderboardApiOptions:BaseUrl=http://leaderboard.webapi
 ```
 
-5. Change the IP address of the connection string in the application settings for the Web API to be your local IP address instead of `127.0.0.1`. This is a temporary fix.
+Change the IP address of the connection string in the application settings for the Web API to be your local IP address instead of `127.0.0.1`. This is a temporary fix.
 
 ## <a name="debug"></a>Debugging with Docker container instances
 One of the nicest features of the Docker support in Visual Studio is the debugging support while running container instances. Check out how easy debugging is by stepping through the application like before.
@@ -97,7 +93,7 @@ Run the application by pressing F5. You should be hitting the breakpoints and ju
 ## <a name="build"></a>Building container images
 Start a command prompt and use the Docker CLI to check which container instances are running at the moment. There should be three containers related to the application:
 - SQL Server in `sqldocker`.
-- Web application in `dockercompose<id>_leaderboard.gamingwebapp_1`.
+- Web application in `dockercompose<id>_gamingwebapp_1`.
 - Web API in `dockercompose<id>_leaderboard.webapi_1`.
 
 where `<id>` is a random unique integer value.
@@ -186,11 +182,11 @@ The new container service also requires these same environment variables. Add th
 You will need to change the connection string for the Web API to reflect the new way of hosting of the database. Add a new environment variable for the connection string of the leaderboard.webapi service in the `docker-compose.override.yml` file:
 
 ```
-- ConnectionStrings:LeaderboardContext=Server=sql.data;Database=LeaderboardNETCore;User Id=sa;Password=Pass@word;Trusted_Connection=False
+- ConnectionStrings:LeaderboardContext=Server=sql.data;Database=Leaderboard;User Id=sa;Password=Pass@word;Trusted_Connection=False
 ```
 
 > ##### Strange connection string or not? 
-> There are at least two remarkable things in this connection string. Can you spot them and explain why? Don't worry if not, as we will look at this in the [Networking](Lab3-Networking.md) lab.
+> There are at least two remarkable things in this connection string. Can you spot them and explain why? Don't worry if not, as we will look at this in the [Networking](Lab4-Networking.md) lab.
  
 With this change, you should be able to run your application completely from containers. Make sure you have stopped any containers related to the application. Give it a try and fix any issues that occur. 
 
