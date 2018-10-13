@@ -10,12 +10,12 @@ Goals for this lab:
 - [Running SQL Server in a Docker container](#sql)
 
 ## <a name="run"></a>Run existing application
-We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 0 - Getting Started](Lab0-GettingStarted.md) to clone it now if you do not have the sources. Switch to the `Start` branch.
+We will start with running the existing ASP.NET Core application from Visual Studio. Make sure you have cloned the Git repository, or return to [Lab 1 - Getting Started](Lab1-GettingStarted.md) to clone it now if you do not have the sources. Switch to the `Start` branch.
 
 > ##### Important
 > Make sure you have switched to the `Start` branch to use the right .NET solution. If you are still on the `master` branch, you will use the completed solution. 
 
-Open the solution `RetroGaming2017.sln` in Visual Studio. Take your time to navigate the code and familiarize yourself with the various projects in the solution. You should be able to identify these:
+Open the solution `ContainerWorkshop.sln` in Visual Studio. Take your time to navigate the code and familiarize yourself with the various projects in the solution. You should be able to identify these:
 - `GamingWebApp`, an ASP.NET MVC Core frontend 
 - `Leaderboard.WebAPI`, an ASP.NET Core Web API 
 
@@ -23,9 +23,9 @@ For now, the SQL Server for Linux container instance is providing the developer 
 
 Right-click both the GamingWebApp and Leaderboard.WebAPI and start to debug a new instance.
 
-First, navigate to the web site located at http://localhost:46560/. There should be no highscores listed yet. Notice what the operating system is that you are currently running on.
+First, navigate to the web site located at http://localhost:44325/. There should be a single highscore listed. Notice what the operating system is that you are currently running on.
 
-Next, navigate to the Web API endpoint at http://localhost:31741/swagger. Experiment with the GET and POST operations that are offered from the Swagger user interface. Try to retrieve the list of high scores, and add a new high score for one of the registered player names.
+Next, navigate to the Web API endpoint at http://localhost:44369/swagger. Experiment with the GET and POST operations that are offered from the Swagger user interface. Try to retrieve the list of high scores, and add a new high score for one of the registered player names.
 
 Make sure you know how this application is implemented. Set breakpoints if necessary and navigate the flow of the application for the home page.
 
@@ -53,7 +53,7 @@ Now that the projects are running from a Docker container, the application might
 
 > Some things to try:
 > - Inspect the running and stopped containers
-> - Try to reach the Web API from http://localhost:31741/swagger.
+> - Try to reach the Web API from http://localhost:44369/swagger.
 > - Debug the call from the web page to the API by stepping through the code.
 > - Verify application settings for each of the projects. 
 
@@ -67,7 +67,7 @@ ports:
 ```
 environment:
   - ASPNETCORE_ENVIRONMENT=Development
-  - ASPNETCORE_URLS=http://0.0.0.0:1337
+  - ASPNETCORE_URLS=https://+:443;http://+:80
 ```
 
 > You will learn more on networking later on. For now, notice that the URL is not referring to `localhost` but `leaderboard.webapi` (the name of the Docker container service as defined in the `docker-compose.yml` file).
