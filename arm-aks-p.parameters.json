@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceName": {
+      "value": "RetroGaming2019Cluster"
+    },
+    "location": {
+      "value": "westeurope"
+    },
+    "agentCount": {
+      "value": 3
+    },
+    "agentVMSize": {
+      "value": "Standard_DS1_v2"
+    },
+    "dnsPrefix": {
+      "value": "retrogaming2019"
+    },
+    "sshRSAPublicKey": {
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEQfeMx/E91RcgeMN3NqaDxtIiRdZMRWWcuwevZyLtH+2WuovA7nhVaz0x0bDKy+ufY47NqSc4c1rLblBnFonfTv1sm2FIM3P9ap8cjspu8wd+fV/tCEjE+OiIkCw1QxbRLtn+iLkvlBN32c5aPExQGgvMGtNK3DjZgzWeY/GFWWeMb6Ge9+6A6uPKRGhv6lvYQCET+uJ4ch0ufiktPIsKJr3CmwOgVaQgnW0Jcu2hLYzR4M68z6On+wUb+CHx+8I3bJGOkXBfPnCvvDaEULiIwQSPpfa5xcZAfcFvnlYaZyCnFlOGqBIW8JwK5WdkClkxyCEeKDtf56Bq0b100KBL"
+    },
+    "servicePrincipalClientId": {
+      "value": "ca5a0aeb-0eec-49a3-a527-a29e2524fa5b"
+    },
+    "servicePrincipalClientSecret": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6d45a9d6-675e-4064-8356-08660968c19b/resourceGroups/RetrogGaming2019/providers/Microsoft.KeyVault/vaults/RetroGaming2019KeyVault"
+        },
+        "secretName": "retrogamingClientSecret"
+      }
+    },
+    "kubernetesVersion": {
+      "value": "1.11.1"
+    },
+    "workspaceName": {
+      "value": "RetroGaming2019LogAnalytics"
+    },
+    "workspaceRegion": {
+      "value": "westeurope"
+    },
+    "enableHttpApplicationRouting": {
+      "value": true
+    },
+    "networkPlugin": {
+      "value": "kubenet"
+    }
+  }
+}

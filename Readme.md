@@ -11,19 +11,19 @@ To get the best experience with the hands-on-labs it is recommended that you pre
 
 ### Preparing for workshop
 
-Even though you can certainly participate in this workshop with an unprepared laptop, it will save a lot of time to install your development machine ahead of time. In [Lab 0 - Getting started](Lab0-GettingStarted.md) you will find a list of the recommended tools to install on your laptop or development Virtual Machine.
+Even though you can certainly participate in this workshop with an unprepared laptop, it will save a lot of time to install your development machine ahead of time. In [Lab 1 - Getting started](docs/Lab1-GettingStarted.md) you will find a list of the recommended tools to install on your laptop or development Virtual Machine.
 
 Additionally, for hosting a container cluster in Microsoft Azure you will need an Azure subscription. You can create a trial account if you do not have a subscription available.
 
 ## Labs in this workshop
 
-- [Lab 1 - Getting started](Lab1-GettingStarted.md)
-- [Lab 2 - Docker101](Lab2-Docker101.md)
-- [Lab 3 - Dockerizing .NET Core](Lab3-DockerizingNETCore.md)
-- [Lab 4 - Networking](Lab4-Networking.md)
-- [Lab 5 - Environments](Lab5-Environments.md)
-- [Lab 6 - Registries and clusters](Lab6-RegistriesClusters.md)
-- [Lab 7 - Security](Lab7-Security.md)
-- [Lab 8 - VSTS Pipelines](Lab8-VSTSPipelines.md)
+- [Lab 1 - Getting started](docs/Lab1-GettingStarted.md)
+- [Lab 2 - Docker101](docs/Lab2-Docker101.md)
+- [Lab 3 - Dockerizing .NET Core](docs/Lab3-DockerizingNETCore.md)
+- [Lab 4 - Networking](docs/Lab4-Networking.md)
+- [Lab 5 - Environments](docs/Lab5-Environments.md)
+- [Lab 6 - Registries and clusters](docs/Lab6-RegistriesClusters.md)
+- [Lab 7 - Security](docs/Lab7-Security.md)
+- [Lab 8 - VSTS Pipelines](docs/Lab8-VSTSPipelines.md)
 
 

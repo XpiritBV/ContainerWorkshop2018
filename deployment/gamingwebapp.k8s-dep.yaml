@@ -1,0 +1,180 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: __namespace__
+  labels:
+    version: dev
+    product: RetroGaming
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: __namespace__
+  name: svc-gamingwebapp
+  labels:
+    version: dev
+    product: RetroGaming
+spec:
+  selector:
+    app: gamingwebapp
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: __namespace__
+  name: svc-leaderboardwebapi
+  labels:
+    version: dev
+    product: RetroGaming
+spec:
+  selector:
+    app: leaderboardwebapi
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: __namespace__
+  name: dep-gamingwebapp
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: gamingwebapp
+    spec:
+      containers:
+      - name: gamingwebapp
+        terminationMessagePath: "/tmp/gamingwebapp-log"
+        image: __containerregistry__/gamingwebapp:__Build.BuildId__
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://0.0.0.0:80
+        - name: LeaderboardApiOptions__BaseUrl
+          value: http://svc-leaderboardwebapi
+        - name: ApplicationInsights__InstrumentationKey
+          valueFrom:
+            secretKeyRef:
+              name: appinsights-secret
+              key: instrumentation_key
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources:
+          limits:
+            cpu: "0.10"
+      imagePullSecrets:
+        - name: acrkey
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: __namespace__
+  name: dep-leaderboardwebapi
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: leaderboardwebapi
+    spec:
+      volumes:
+      - name: secretsettings
+        secret:
+          secretName: secret-appsettings
+      containers:
+      - name: leaderboardwebapi
+        terminationMessagePath: "/tmp/leaderboardwebapi-log"
+        image: __containerregistry__/leaderboard.webapi:__Build.BuildId__
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: secretsettings
+          mountPath: /app/secrets
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://0.0.0.0:80
+        - name: ApplicationInsights__InstrumentationKey
+          value: __aikey__
+        - name: KeyVaultName
+          value: __keyvaulturl__
+        - name: KeyVaultClientSecret
+          value: __keyvaultclientsecret__
+        - name: KeyVaultClientID
+          value: __keyvaultclientid__
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources:
+          limits:
+            cpu: "0.10"
+      imagePullSecrets:
+        - name: acrkey
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: __namespace__
+  name: ingress-gamingwebapp
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: __dns__
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: svc-gamingwebapp
+          servicePort: 80
+      - path: /api
+        backend:
+          serviceName: svc-leaderboardwebapi
+          servicePort: 80
+      - path: /swagger
+        backend:
+          serviceName: svc-leaderboardwebapi
+          servicePort: 80
+      - path: /health
+        backend:
+          serviceName: svc-leaderboardwebapi
+          servicePort: 80

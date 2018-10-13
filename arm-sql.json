@@ -1,0 +1,73 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "edition": {
+      "type": "string",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ]
+    },
+    "administratorLogin": {
+      "type": "string",
+      "defaultValue": "azureuser"
+    },
+    "administratorLoginPassword": {
+      "type": "securestring"
+    },
+    "serverName": {
+      "type": "string",
+      "defaultValue": "retrogaming2019server"
+    },
+    "dbName": {
+      "type": "string",
+      "defaultValue": "retrogaming2019database"
+    },
+    "location": {
+      "type": "string"
+    } 
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "kind": "v12.0",
+      "name": "[parameters('serverName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]",
+      "scale": null,
+      "properties": {
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "version": "12.0"
+      },
+      "type": "Microsoft.Sql/servers"
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "name": "[concat(parameters('serverName'), '/', parameters('dbName'))]",
+      "location": "[parameters('location')]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+      ],
+      "properties": {
+        "edition": "[parameters('edition')]"
+      }
+    },
+    {
+      "apiVersion": "2014-04-01-preview",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+      ],
+      "name": "[concat(parameters('serverName'), '/', 'AllowAllWindowsAzureIps')]",
+      "properties": {
+        "endIpAddress": "0.0.0.0",
+        "startIpAddress": "0.0.0.0"
+      },
+      "type": "Microsoft.Sql/servers/firewallrules"
+    }
+  ]
+}

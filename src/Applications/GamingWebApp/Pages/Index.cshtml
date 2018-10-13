@@ -1,0 +1,12 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<h1>All Time Highscore Hall of Fame</h1>
+<div class="row enjoy-css">
+    @foreach (var score in Model.Scores)
+    {
+        <div class="enjoy-css">@score.Game:  @score.Points - @score.Nickname</div>
+    }
+</div>

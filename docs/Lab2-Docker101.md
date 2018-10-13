@@ -30,27 +30,29 @@ Verify that your installation functions correctly. You should get see the curren
 
 Tooling version:
 ```
-Docker version 17.11.0-ce-rc2, build d7062e5
+Docker version 18.06.1-ce, build e68fc7a
 ```
 
 Client and server information:
 ```
 Client:
- Version:      17.11.0-ce-rc2
- API version:  1.34
- Go version:   go1.8.4
- Git commit:   d7062e5
- Built:        Wed Nov  1 22:08:18 2017
- OS/Arch:      windows/amd64
+ Version:           18.06.1-ce
+ API version:       1.38
+ Go version:        go1.10.3
+ Git commit:        e68fc7a
+ Built:             Tue Aug 21 17:21:34 2018
+ OS/Arch:           windows/amd64
+ Experimental:      false
 
 Server:
- Version:      17.11.0-ce-rc2
- API version:  1.34 (minimum version 1.12)
- Go version:   go1.8.5
- Git commit:   d7062e5
- Built:        Wed Nov  1 22:14:52 2017
- OS/Arch:      linux/amd64
- Experimental: true
+ Engine:
+  Version:          18.06.1-ce
+  API version:      1.38 (minimum version 1.12)
+  Go version:       go1.10.3
+  Git commit:       e68fc7a
+  Built:            Tue Aug 21 17:29:02 2018
+  OS/Arch:          linux/amd64
+  Experimental:     false   
 ```
 ## <a name="manage"></a>Managing container instances
 Let's see whether you can start some container instances. The categorical sample is "Hello World". Start a container that should run if everything is configured correctly. From a command prompt, run the following command:
@@ -112,11 +114,10 @@ You can still examine the output of the container even though it is detached fro
 ```
 docker logs 70e
 ```
-Examine the contents of the database by adding a Data Connection in the Server Explorer. The database connection details are:
+Examine the contents of the master database by adding a Data Connection in the Server Explorer. The database connection details are:
 - Server: 127.0.0.1,5433 (notice the comma instead of a colon)
 - Username: sa
 - Password: Pass@word
-- Database name: LeaderboardNetCore
 
 <img src="images/AddDataConnection.png" width="400" />
 

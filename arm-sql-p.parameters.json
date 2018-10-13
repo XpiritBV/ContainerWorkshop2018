@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "administratorLogin": {
+      "value": "azureuser"
+    },
+    "serverName": {
+      "value": "retrogaming2019server"
+    },
+    "dbName": {
+      "value": "Leaderboard"
+    },
+    "edition": {
+      "value": "Standard"
+    },
+    "location": {
+      "value": "WestEurope"
+    }, 
+    "administratorLoginPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6d45a9d6-675e-4064-8356-08660968c19b/resourceGroups/RetroGaming2019/providers/Microsoft.KeyVault/vaults/RetroGaming2019KeyVault"
+        },
+        "secretName": "RetroGaming2019DatabasePassword"
+      }
+    }
+  }
+}

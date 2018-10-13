@@ -1,0 +1,111 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27705.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C94C2928-D205-4815-9740-048D6D8335BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{F46B4D60-20FF-4F43-91FB-FCCA506DAF90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FA099EBE-43F2-4822-9184-1B526233A4D1}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Lab1-GettingStarted.md = docs\Lab1-GettingStarted.md
+		docs\Lab2-Docker101.md = docs\Lab2-Docker101.md
+		docs\Lab3-DockerizingNETCore.md = docs\Lab3-DockerizingNETCore.md
+		docs\Lab4-Networking.md = docs\Lab4-Networking.md
+		docs\Lab5-Environments.md = docs\Lab5-Environments.md
+		docs\Lab6-RegistriesClusters.md = docs\Lab6-RegistriesClusters.md
+		docs\Lab7-Security.md = docs\Lab7-Security.md
+		docs\Lab8-VSTSPipelines.md = docs\Lab8-VSTSPipelines.md
+		docs\Lab9-Explore.md = docs\Lab9-Explore.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{76C7A3AE-699D-466B-86C8-60C85A4E1B4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{037E1939-589D-433F-A839-D4E36D2FB615}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leaderboard.WebAPI", "src\Services\Leaderboard.WebAPI\Leaderboard.WebAPI.csproj", "{D515E23F-6D54-449C-BE7B-9138A358095C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingWebApp", "src\Applications\GamingWebApp\GamingWebApp.csproj", "{52665524-B5A3-4DAF-A135-CE902F607C79}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{17F16762-DBE5-4E11-9622-75D72E0D7456}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{164F33F5-F775-4FA7-865A-94F620C15A89}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CreateAzureSqlUser.sql = CreateAzureSqlUser.sql
+		CreateDatabase.sql = CreateDatabase.sql
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ARM", "ARM", "{AE6D2C70-7590-4E21-9B27-C048236C1A88}"
+	ProjectSection(SolutionItems) = preProject
+		arm-acr-p.parameters.json = arm-acr-p.parameters.json
+		arm-acr.json = arm-acr.json
+		arm-aks-p.parameters.json = arm-aks-p.parameters.json
+		arm-aks.json = arm-aks.json
+		arm-applicationinsights-p.parameters.json = arm-applicationinsights-p.parameters.json
+		arm-applicationinsights.json = arm-applicationinsights.json
+		arm-sql-p.parameters.json = arm-sql-p.parameters.json
+		arm-sql.json = arm-sql.json
+		provision.bat = provision.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployments", "Deployments", "{045E1A9A-58F4-430A-B8CF-B5F25CC104F7}"
+	ProjectSection(SolutionItems) = preProject
+		appsettings.secrets.json = appsettings.secrets.json
+		deployment\gamingwebapp.k8s-dep.yaml = deployment\gamingwebapp.k8s-dep.yaml
+		deployment\gamingwebapp.secret.yaml = deployment\gamingwebapp.secret.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{0E68944E-80E9-441D-A1F3-88998A09FFDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.HealthChecks", "src\Extensions\Microsoft.AspNetCore.HealthChecks\Microsoft.AspNetCore.HealthChecks.csproj", "{37207A02-6B4E-4410-AFA7-3224253C099E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks", "src\Extensions\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj", "{705CBAFE-9845-4502-95C3-F2D6352DF86E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D515E23F-6D54-449C-BE7B-9138A358095C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D515E23F-6D54-449C-BE7B-9138A358095C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D515E23F-6D54-449C-BE7B-9138A358095C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D515E23F-6D54-449C-BE7B-9138A358095C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52665524-B5A3-4DAF-A135-CE902F607C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52665524-B5A3-4DAF-A135-CE902F607C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52665524-B5A3-4DAF-A135-CE902F607C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52665524-B5A3-4DAF-A135-CE902F607C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17F16762-DBE5-4E11-9622-75D72E0D7456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17F16762-DBE5-4E11-9622-75D72E0D7456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17F16762-DBE5-4E11-9622-75D72E0D7456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17F16762-DBE5-4E11-9622-75D72E0D7456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37207A02-6B4E-4410-AFA7-3224253C099E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37207A02-6B4E-4410-AFA7-3224253C099E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37207A02-6B4E-4410-AFA7-3224253C099E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37207A02-6B4E-4410-AFA7-3224253C099E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{705CBAFE-9845-4502-95C3-F2D6352DF86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{705CBAFE-9845-4502-95C3-F2D6352DF86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{705CBAFE-9845-4502-95C3-F2D6352DF86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{705CBAFE-9845-4502-95C3-F2D6352DF86E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76C7A3AE-699D-466B-86C8-60C85A4E1B4E} = {C94C2928-D205-4815-9740-048D6D8335BF}
+		{037E1939-589D-433F-A839-D4E36D2FB615} = {C94C2928-D205-4815-9740-048D6D8335BF}
+		{D515E23F-6D54-449C-BE7B-9138A358095C} = {037E1939-589D-433F-A839-D4E36D2FB615}
+		{52665524-B5A3-4DAF-A135-CE902F607C79} = {76C7A3AE-699D-466B-86C8-60C85A4E1B4E}
+		{AE6D2C70-7590-4E21-9B27-C048236C1A88} = {164F33F5-F775-4FA7-865A-94F620C15A89}
+		{045E1A9A-58F4-430A-B8CF-B5F25CC104F7} = {164F33F5-F775-4FA7-865A-94F620C15A89}
+		{0E68944E-80E9-441D-A1F3-88998A09FFDE} = {C94C2928-D205-4815-9740-048D6D8335BF}
+		{37207A02-6B4E-4410-AFA7-3224253C099E} = {0E68944E-80E9-441D-A1F3-88998A09FFDE}
+		{705CBAFE-9845-4502-95C3-F2D6352DF86E} = {0E68944E-80E9-441D-A1F3-88998A09FFDE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {488A3AF9-007C-4ECC-BE59-85DC840176C1}
+	EndGlobalSection
+EndGlobal
