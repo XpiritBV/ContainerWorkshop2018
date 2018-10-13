@@ -1,4 +1,4 @@
-# Lab 7 - VSTS Build and release pipelines
+# Lab 8 - VSTS Build and release pipelines
 
 Goals for this lab:
 - Create build pipeline to build images
@@ -136,4 +136,4 @@ Finally, commit and push your changes. Run a new build and consequent release to
 
 In this lab you have created a build pipeline to build and push the container images for your .NET solution. You used a release pipeline to deploy the composition to a cluster in Azure. Additionally, you added deployment details to the composition file to describe the replicas and restart behavior of your stack.
 
-Continue with [Lab 8 - Exploration](Lab8-Explore.md).
+Continue with [Lab 9 - Exploration](Lab9-Explore.md).

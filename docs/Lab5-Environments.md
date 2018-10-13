@@ -1,4 +1,4 @@
-# Lab 4 - Working with environments
+# Lab 5 - Working with environments
 
 In this lab you will learn how to create and run compositions. 
 
@@ -141,4 +141,4 @@ While you are looking at this, follow the code to the proxy implementation and g
 
 In this lab you have examined the way environments can be used to distinguish various hosting situations for your Docker composition. It is important to know which settings must be changeable for different environemnts, as the Docker images that you build cannot be changed internally.
 
-Continue with [Lab 5 - Registries and clusters](Lab5-RegistriesClusters.md).
+Continue with [Lab 6 - Registries and clusters](Lab6-RegistriesClusters.md).

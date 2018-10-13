@@ -1,4 +1,4 @@
-# Lab 0 - Getting started
+# Lab 1 - Getting started
 
 This lab is going to let you prepare your development environment for the rest of the labs in the workshop. Not all steps are required. The more you can prepare, the better the experience during the workshop.
 
@@ -113,4 +113,4 @@ This does not incur any costs other than your Azure resource consumption and sho
 ## Wrapup
 You have prepared your laptop and cloud environment to be ready for the next labs. Any issues you may have, can probably be resolved during the labs. Ask your fellow attendees or the proctor to help you, if you cannot solve the issues.
 
-Continue with [Lab 1 - Docker101](Lab1-Docker101.md).
+Continue with [Lab 2 - Docker101](Lab2-Docker101.md).

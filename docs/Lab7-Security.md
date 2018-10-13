@@ -1,4 +1,4 @@
-# Lab 6 - Security
+# Lab 7 - Security
 
 During this lab you will look at a specific security related aspect for containers: secrets in configuration. There is a lot more to be said and done about security  for containers though. Your focus will be to remove all secrets from configuration files and into secure stores for development and production.
 
@@ -184,4 +184,4 @@ Inside the service for `leaderboardwebapi` of the `docker-stack.azure.yml` file 
 
 In this lab you have stored the secrets of your application in the Azure Key Vault. You also moved the remaining secrets, containing the details to get access to the vault, in user secrets for development scenarios. In production these secrets would be stored as Docker secrets. Support for .NET Core is still under development.
 
-Continue with [Lab 7 - VSTS Pipelines](Lab7-VSTSPipelines.md).
+Continue with [Lab 8 - VSTS Pipelines](Lab8-VSTSPipelines.md).

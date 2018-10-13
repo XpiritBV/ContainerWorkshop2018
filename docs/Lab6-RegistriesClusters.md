@@ -1,4 +1,4 @@
-# Lab 5 - Container registries and clusters
+# Lab 6 - Container registries and clusters
 
 In this lab you are going to learn about registries and clusters. This includes pushing images to the registry and deploying compositions to a running cluster.
 
@@ -240,4 +240,4 @@ Try to deploy the stack again using Azure SQL Database now instead of the contai
 
 In this lab you have created a composition that is able to deploy a stack of services to a cluster. Necessary changes to the environment variables were made and perhaps you even got to use an Azure SQL Database. 
 
-Continue with [Lab 6 - Security](Lab6-Security.md).
+Continue with [Lab 7 - Security](Lab7-Security.md).

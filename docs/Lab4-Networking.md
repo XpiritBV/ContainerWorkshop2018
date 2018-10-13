@@ -1,4 +1,4 @@
-# Lab 3 - Networking
+# Lab 4 - Networking
 
 This lab will give you time to work with the various networking features of the Docker stack and implement a network design in your current application.
 
@@ -115,4 +115,4 @@ After defining this alias, change the connection string setting of the `Leaderbo
 
 In this lab you experimented with networks in Docker from the command line and later with definitions in compositions. You applied network segmentation to separate the container instances from each other, to improve network security.
 
-Continue with [Lab 4 - Environments](Lab4-Environments.md).
+Continue with [Lab 5 - Environments](Lab5-Environments.md).
