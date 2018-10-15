@@ -16,7 +16,7 @@ Run a couple of commands from the Docker CLI to investigate the existing network
 docker network ls
 ```
 
-You should see a number of networks, amongst which the default networks `host`, `bridge` and `null`. There might be some additional networks from the Docker composition you created in the previous lab. 
+You should see a number of networks, amongst which the default networks `host`, `bridge` and `none`. There might be some additional networks from the Docker composition you created in the previous lab. 
 
 Pick a couple of the available networks by running:
 ``` 
@@ -35,12 +35,12 @@ Shut down any running compositions, by stopping your Visual Studio debugging ses
 
 Let's create a new network and run a couple of containers in them. 
 ```
-docker network create sela_network --driver bridge
+docker network create workshop_network --driver bridge
 ```
 Use `docker inspect` on the new network. Note the network address range that it will use.
 Run a simply container with a Bash shell in attached mode:
 ```
-docker run -it --name c1 --network sela_network alpine sh
+docker run -it --name c1 --network workshop_network alpine sh
 ```
 You should see a Bash command prompt `/ #`. You can check the IP address that this container has by using the command `ip address` or `ip a` for short. There should be information showing an address in the range you saw before, resembling something like this:
 ```
@@ -60,10 +60,10 @@ Try to figure out in which network this container ended up.
 Experiment some more with manually created networks. For example use a specific address range when creating the network and add a container with a specified IP address in the range and an alias:
 
 ```
-docker network create -d bridge --subnet 10.0.0.0/24 sela_specific
-docker run -itd --name c3 --ip 10.0.0.123 --net sela_specific --network-alias c3.seladeveloperpractice.local alpine sh
+docker network create -d bridge --subnet 10.0.0.0/24 workshop_specific
+docker run -itd --name c3 --ip 10.0.0.123 --net workshop_specific --network-alias c3.containerworkshop.local alpine sh
 ```
-You should be able to ping container `c3` from inside itself with `ping c3.seladeveloperpractice.local`. Also, inspect the network again to see the running containers in it. 
+You should be able to ping container `c3` from inside itself with `ping c3.containerworkshop.local`. Also, inspect the network again to see the running containers in it. 
 
 ## <a name="define"></a>Define networks in docker compositions
 
@@ -95,18 +95,18 @@ Finish all changes and test your new network topology for the container composit
 ```
 docker network ls
 docker inspect <networkid>
-docker exec -it <containerid> bash
+docker exec -it <containerid> sh
 ```
 
 The last command will give a bash from the container instance whose ID you specified. Run a command `ip a` and check how many ethernet adapters are listed. Verify that it corresponds with your design.
 
-You can also give a container instance an alias, so you can refer to it by a network alias instead of its container service name. Use the fragment below to give the SQL Server instance a network alias `sql1.seladeveloperpractice.local`.
+You can also give a container instance an alias, so you can refer to it by a network alias instead of its container service name. Use the fragment below to give the SQL Server instance a network alias `sql.containerworkshop.local`.
 
 ```
     networks:
       backend:
         aliases:
-          - sql1.seladeveloperpractice.local
+          - sql.containerworkshop.local
 ```
 
 After defining this alias, change the connection string setting of the `LeaderboardContext` for the Web API to use this new network name.
