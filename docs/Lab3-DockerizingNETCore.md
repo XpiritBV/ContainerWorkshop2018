@@ -70,7 +70,7 @@ ports:
 
 > You will learn more on networking later on. For now, notice that the URL is not referring to `localhost` but `leaderboardwebapi` (the name of the Docker container service as defined in the `docker-compose.yml` file).
 
-Change the `LeaderboardApiOptions:BaseUrl` setting to point to the new endpoint of the Web API with the internal address `http://leaderboard.webapi`. Choose the right place to make that change, considering that you are now running from Docker containers. 
+Change the `LeaderboardWebApiBaseUrl` setting to point to the new endpoint of the Web API with the internal address `http://leaderboard.webapi`. Choose the right place to make that change, considering that you are now running from Docker containers. 
   
 > ##### Hint
 > Changing the setting in the `appsettings.json` file will work and you could choose to do so for now. It does mean that the setting for running without container will not work anymore. So, what other place can you think of that might work? Use that instead if you know, or just change `appsettings.json`.
@@ -79,7 +79,7 @@ Change the `LeaderboardApiOptions:BaseUrl` setting to point to the new endpoint 
 gamingwebapp:
   environment:
     - ASPNETCORE_ENVIRONMENT=Development
-    - LeaderboardApiOptions:BaseUrl=http://leaderboard.webapi
+    - LeaderboardWebApiBaseUrl=http://leaderboard.webapi
 ```
 
 Change the IP address of the connection string in the application settings for the Web API to be your local IP address instead of `127.0.0.1`. This is a temporary fix.

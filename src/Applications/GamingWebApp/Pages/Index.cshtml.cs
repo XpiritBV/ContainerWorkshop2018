@@ -19,7 +19,7 @@ namespace GamingWebApp.Pages
         private readonly IOptionsSnapshot<LeaderboardApiOptions> options;
         private readonly ILeaderboardClient proxy;
 
-        public IndexModel(ILeaderboardClient proxy, IOptionsSnapshot<LeaderboardApiOptions> options, ILoggerFactory loggerFactory)
+        public IndexModel(IOptionsSnapshot<LeaderboardApiOptions> options, ILeaderboardClient proxy, ILoggerFactory loggerFactory)
         {
             this.logger = loggerFactory.CreateLogger<IndexModel>();
             this.options = options;

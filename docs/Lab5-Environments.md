@@ -13,21 +13,21 @@ Compositions are essential to manage the many different combinations of containe
 
 Docker Compose is the tool of choice for this lab to manage compositions of containers. It allows you to use a command-line interface, similar to the Docker CLI, to interact with compositions defined in a `docker-compose.yml` file. There are other tools that allow the creation of compositions, such as the YAML files of Kubernetes. You will use Docker Compose in this lab.
 
-To become familiar with Docker Compose you will first start a container based on a YAML file using `docker-compose.exe`. Take a look at the Visual Studio solution and examine the `docker-compose.ci.build.yml` file.
+To become familiar with Docker Compose you will first start a container based on a YAML file using `docker-compose.exe`. Create a file named `docker-compose.ci.build.yml` and add the following content to it:
 
 ```
 version: '3'
 
 services:
   ci-build:
-    image: microsoft/aspnetcore-build:1.0-2.0
+    image: microsoft/dotnet:2.1-sdk
     volumes:
       - .:/src
     working_dir: /src
-    command: /bin/bash -c "dotnet restore ./RetroGaming2017.sln ...
+    command: /bin/bash -c "dotnet restore ./ContainerWorkshop.sln && dotnet publish ./ContainerWorkshop.sln -c Release -o ./obj/Docker/publish"
 ```
 
-The definitions in the compose file describe a service called `ci-build` that uses the image `microsoft/aspnetcore-build:1.0-2.0` and has a volume mapping to the root of the source code. The command starts a build in the working directory `src`. 
+The definitions in the compose file describe a service called `ci-build` that uses the image `microsoft/dotnet:2.1-sdk` and has a volume mapping to the root of the source code. The command starts a build in the working directory `src`. 
 
 Start this composition by executing the command from the root of the Visual Studio solution where the Docker Compose YAML files are located:
 ```
@@ -62,7 +62,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up
 Starting the composition this way might work or fail, depending on whether you have run the ci-build composition before. Think about what happens in each of the cases. 
 
 > ##### Hint
-> You can explore the folder `RetroGaming2017\obj\Docker` and examine two additional compose files called `docker-compose.vs.debug.g.yml` and `docker-compose.vs.release.g.yml`.
+> You can explore the folder `ContainerWorkshop\obj\Docker` and examine two additional compose files called `docker-compose.vs.debug.g.yml` and `docker-compose.vs.release.g.yml`.
 
 Ideally, your override file for Visual Studio contains the service that are needed when running from the IDE on a development machine.
 
@@ -108,30 +108,33 @@ Additionally, create a `appsettings.production.json` and change the settings to 
 
 In this sample application the web application only has a single setting for an external Web API endpoint.
 ```
-- LeaderboardWebApiBaseUrl=http://leaderboard.webapi:1337
+- LeaderboardWebApiBaseUrl=http://leaderboard.webapi
 ```
 
 Even so, you can formalize a group of related settings, regardless of their origin. This can be from one of the `appsettings.json` files, `docker-compose.override.yml` files or even environment variables. 
 
-In the web application project create a new class called `WebAppSettings` and give it a single `string` property called  `LeaderboardWebApiBaseUrl`. In more complex scenarios this class would contain more properties for each of the settings.
+In the web application project create a new class called `LeaderboardApiOptions` and give it a single `string` property called `BaseUrl`. In more complex scenarios this class would contain more properties for each of the settings.
 
 Next, go to the `Startup` class and add a statement in the `ConfigureServices` method to load the web app settings from the configuration.
 ```
-services.Configure<WebAppSettings>(Configuration);
+services.Configure<LeaderboardApiOptions>(Configuration);
 ```
-This instructs the ASP.NET MVC Core dependency injection system to add an instance of the `WebAppSettings` class to the list of registered mappings. It allows you to inject the settings into any other object created by the DI system.
+This instructs the ASP.NET MVC Core dependency injection system to add an instance of the `LeaderboardApiOptions` class to the list of registered mappings. It allows you to inject the settings into any other object created by the DI system.
 
-Open the `HomeController.cs` file and locate (or create) the constructor of the controller class. Change it to have two parameters, which will be injected:
+Open the `Index.cshtml.cs` file and locate (or create) the constructor of the controller class. Change it to have two parameters, which will be injected:
 ```
-public HomeController(IOptionsSnapshot<WebAppSettings> settings, ILoggerFactory loggerFactory)
+public IndexModel(IOptionsSnapshot<LeaderboardApiOptions> options, ILeaderboardClient proxy, ILoggerFactory loggerFactory)
 ```
-Additionally, create a read-only field to hold the value of the injected `settings` parameter values. 
+Additionally, create a read-only field to hold the value of the injected `options` parameter values. 
 
-The last step is to use the values from the settings object at the appropriate place. Find the `Index` action method and use the value of the settings in the constructor of the proxy object.
+The last step is to use the values from the settings object at the appropriate place. Find the `Get` async method and use the value of the settings in the creation of the proxy object.
 ```
-public async Task<IActionResult> Index()
+public async Task OnGetAsync()
 {
-  LeaderboardProxy proxy = new LeaderboardProxy(settings.Value.LeaderboardWebApiBaseUrl, logger);
+  Scores = new List<HighScore>(); 
+  try
+  {
+    ILeaderboardClient proxy = RestService.For<ILeaderboardClient>(options.Value.BaseUrl);
   ...
 }
 ```
