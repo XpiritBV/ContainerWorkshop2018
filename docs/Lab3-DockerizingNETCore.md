@@ -115,38 +115,12 @@ docker run -p 8080:80 -it --name webapp gamingwebapp:dev
 ```
 Check whether the web application is working. 
 
-You should find that it does not work. The console output of the attached container gives a hint on what might be wrong.
+You should find that it brings you in a bash shell on Linux.
 ```
-Did you mean to run dotnet SDK commands? Please install dotnet SDK from:
-  http://go.microsoft.com/fwlink/?LinkID=798306&clcid=0x409
+root@65e40486ab0f:/app#
 ```
 
 Your container image does not contain any of the binaries that make your ASP.NET Core Web application run. Visual Studio uses volume mapping to map the files on your file system into the running container, so it can detect any changes thereby allowing small edits during debug sessions.
-
-Let's create the image from the CLI to understand what is happening. If necessary, terminate the container instance you started by pressing `Ctrl+C` (possibly two times). Change your current directory to the root of the Web application project. It should contain the `Dockerfile` file. Execute the following command: 
-```
-docker build -t gamingwebapp:dev .
-```
-
-You might get an error indicating 
-
-```
-COPY failed: stat /var/lib/docker/tmp/.../obj/Docker/publish: no such file or directory
-```
-
-This is caused by the way that Visual Studio creates Docker images for debugging. It assumes that there is a source environment variable or it will fall back to a folder `obj\Docker\publish`. This can be found in the instruction `COPY ${source:-obj/Docker/publish} .` in the Dockerfile, which expresses that.
-
-Run the command 
-
-```
-dotnet publish -o obj\Docker\publish
-```
-to create a publish folder in the expected place.
-
-You should be able to create the Docker image successfully now. Run the Docker build command like before and try to start the Docker image. If all is well, your container should be running. 
-
-> ##### Fix any errors if necessary
-> Do not dwell on this too long, as you will probably not do manual building of images in the future
 
 > ##### Debug images from Visual Studio
 > Remember that Visual Studio creates Debug images that do not work when run from the Docker CLI. 
