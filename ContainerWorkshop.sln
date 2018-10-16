@@ -55,6 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployments", "Deployments"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.secrets.json = appsettings.secrets.json
 		deployment\gamingwebapp.k8s-dep.yaml = deployment\gamingwebapp.k8s-dep.yaml
+		deployment\gamingwebapp.k8s-static.yaml = deployment\gamingwebapp.k8s-static.yaml
 		deployment\gamingwebapp.secret.yaml = deployment\gamingwebapp.secret.yaml
 	EndProjectSection
 EndProject
