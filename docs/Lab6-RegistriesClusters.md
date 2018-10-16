@@ -108,19 +108,20 @@ This process can be automated by a build and release pipeline. You will learn ho
 
 At this point you will need to have access to a Docker cluster. If you haven't done so already, create an Azure Kubernetes Service cluster in Azure. [Module 1](Lab1-GettingStarted.md) describes how you can create one.
 
-Open the dashboard of your cluster. There are several ways to connect to it. The easiest way is to run the command:
+Open the dashboard of your cluster. There are several ways to connect to it. The easiest way is to use VSCode and the Kubernetes extension. Navigate to the Kubernetes pane on the left and find your cluster listed. Right-click it and use `Set as current cluster` if you have more than one cluster and yours is not selected yet. Right-click again and select `Open Dashboard` from the context menu. This should create a port mapping from your localhost machine to the master node of your cluster. A browser window will open at `http://localhost:10000` and show the Kubernetes dashboard.
+
+Alternatively, you can run the command:
 ```
 >az aks browse --name ContainerWorkshopCluster --resource-group ContainerWorkshop
 ```
 and navigating to the localhost address `http://localhost:8001` that forwards to the actual cluster.
 
-Alternatively, you can list the current available clusters with KubeCtl an
-
+You also set your cluster as the active context and interact with it using kubectl commands. First, retrieve a list of the current available clusters and contexts with `kubectl` commands and then set your cluster as active. All `kubectl` will be executed against that context from now.
 ```
 kubectl cluster-info
 kubectl config get-clusters
 kubectl config get-contexts
-kubectl config set-context ContainerWorkshopCluster
+kubectl config use-context ContainerWorkshopCluster-admin
 ```
 
 Open the [Azure Portal](https://portal.azure.com). Find the resource for your cluster in the resource group `ContainerWorkshop`. Make a note of the properties `HTTP application routing domain` and `API server address`. 
@@ -139,7 +140,6 @@ Kubernetes does not use Docker Compose files for its deployments. The Visual Stu
 You need to make a few changes to the manifest for it to be useable. In particular, make sure you change the following markers:
 - `__containerregistry__`
 - `__httpapplicationroutingdomain__`
-- 
 
 In order to be able to pull images from your registry into the cluster, you will need to authenticate against a private registry. If you are using Docker Hub, then this is not required. 
 

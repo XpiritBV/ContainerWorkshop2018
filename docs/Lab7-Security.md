@@ -9,13 +9,12 @@ Goals for this lab:
 
 ## Secrets and Docker
 
-You must have noticed that the connection string to the database contains a username and password. The connection string is set in an environment variable that is stored in the `docker-compose.yml` and `docker-compose.azure.yml` file . Even though this file is only relevant during startup when the environment variables are set on containers, these secrets inside running containers are easily accessible when you have access to the host.
+You must have noticed that the connection string to the database contains a username and password. The connection string is set in an environment variable that is stored in the `docker-compose.yml` and `gamingwebapp.k8s-static.yaml` file . Even though this file is only relevant during startup when the environment variables are set on containers, these secrets inside running containers are easily accessible when you have access to the host.
 
 Open a Docker CLI and find a running container on your host. This can be your development machine or the Docker cluster from the previous lab. Run one of the following command depending on your choice:
 
 ```
-docker ps                           -- Single host
-docker services ls retrogaming      -- Cluster
+docker ps
 ```
 Pick any running container, but preferably the web API which actually contains the connection string in an environment variable. Use its container ID to inspect it. You should find the `Env` section that contains all variables for the current environment.
 ```
@@ -23,7 +22,7 @@ Pick any running container, but preferably the web API which actually contains t
   "ASPNETCORE_ENVIRONMENT=Development",
   "ASPNETCORE_URLS=http://0.0.0.0:1337",
   "ConnectionStrings:LeaderboardContext=Server=sqldata;
-    Database=LeaderboardNETCore;User Id=sa;Password=Pass@word;
+    Database=Leaderboard;User Id=retrogamer;Password=Pass@word;
     Trusted_Connection=False"
 ],
 ```
@@ -43,7 +42,7 @@ Visit the [Azure Portal](https://portal.azure.com) and create a Key Vault resour
 
 <img src="images/KeyVaultDNSName.png" width="400" />
 
-Next, allow the Web API access to the Key Vault. Register the web API as an Azure Active Directory application. Go to the Azure Active Directory for your Azure subscription and choose `App Registrations`. Create a new application registration called `Leaderboard Web API` of type `Web app / API` and use the local URL `http://localhost:1337` as the Sign-on URL value.
+Next, allow the Web API access to the Key Vault. Register the web API as an Azure Active Directory application. Go to the Azure Active Directory for your Azure subscription and choose `App Registrations`. Create a new application registration called `Leaderboard Web API` of type `Web app / API` and use the local URL `http://localhost:44369` as the Sign-on URL value.
 
 <img src="images/AzureADAppRegistration.png" width="300" />
 
@@ -62,7 +61,7 @@ This should give you a list of values for the following :
 
 Name | Value (example)
 --- | ---
-Key Vault name | https://sdp2017keyvault.vault.azure.net/
+Key Vault name | https://your-keyvault.vault.azure.net/
 Application ID | 1f31d60b-2f81-42c6-9df6-eb636bd3e9d3
 Client Secret | vFwBC9rEtBfO7BNVgeYmSLcpxhTGQfqKG4/ZAoCKhjh=
 
@@ -75,7 +74,7 @@ The configuration system of .NET Core makes it relatively easy to access Key Vau
 Open the `Leaderboard.WebAPI` project and add three key/value pairs to the `appsettings.json` file, replacing the values with your own.
 
 ```
-"KeyVaultName": "https://sdp2017keyvault.vault.azure.net/",
+"KeyVaultName": "https://your-keyvault.vault.azure.net/",
 "KeyVaultClientID": "1f31d60b-2f81-42c6-9df6-eb636bd3e9d3",
 "KeyVaultClientSecret": "vFwBC9rEtBfO7BNVgeYmSLcpxhTGQfqKG4/ZAoCKhjh=",
 ```

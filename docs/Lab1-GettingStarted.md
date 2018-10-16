@@ -61,7 +61,7 @@ Take a look at the solution and inspect the source code. In particular, pay atte
 - Web API and the Entity Framework code to store data
 - Web frontend with proxy code to call Web API
 
-## <a name="5"></a>5. (Optional) Create a Docker Swarm Mode cluster in Azure
+## <a name="5"></a>5. (Optional) Create a Kubernetes cluster in Azure
 
 This part requires you have an active Azure subscription. If you do not, you can create a trial account at [Microsoft Azure](https://azure.microsoft.com/en-us/free/). It will require access to a credit card, even though it will not be charged.
 
@@ -82,6 +82,11 @@ az group create --location WestEurope --name ContainerWorkshop
 Install the Azure Kubernetes Service Command-Line Interface tools by running:
 ```
 az aks install-cli
+```
+Next, create a service principal to manage the Azure subscription and allow 
+
+```
+az ad sp create-for-rbac --name "ContainerWorkshopServicePrincipal" --skip-assignment
 ```
 
 You can create the cluster with the `az aks create` command. You need to tweak command below to contain the specifics from the created service principal. You can also change the names of the cluster and DNS name prefix to your liking:

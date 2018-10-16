@@ -21,6 +21,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: svc-sqldata
+  labels:
+    version: dev
+    product: RetroGaming
+    app: sqldata
+spec:
+  selector:
+    app: sqldata
+  ports:
+    - port: 1433
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: svc-leaderboardwebapi
   labels:
     version: dev
@@ -93,11 +108,11 @@ spec:
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: Production
+          value: Development
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80
         - name: ConnectionStrings__LeaderboardContext
-          value: Server=dep-sqldata;Database=Leaderboard;User Id=sa;Password=Pass@word;Trusted_Connection=False
+          value: Server=svc-sqldata;Database=Leaderboard;User Id=sa;Password=Pass@word;Trusted_Connection=False
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -106,6 +121,18 @@ spec:
             cpu: "0.10"
       imagePullSecrets:
         - name: pullkey
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mssql-data-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 5Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -121,6 +148,10 @@ spec:
       containers:
       - name: sqldata
         image: microsoft/mssql-server-linux
+        resources:
+          limits:
+            cpu: 100m
+            memory: 600Mi
         env:
         - name: SA_PASSWORD
           value: Pass@word
@@ -128,11 +159,19 @@ spec:
           value: Developer
         - name: ACCEPT_EULA
           value: "Y"
+        - name: MSSQL_MEMORY_LIMIT_MB
+          value: "512"
         ports:
         - containerPort: 1433
-        resources:
-          limits:
-            cpu: "0.10"
+        volumeMounts:
+          - mountPath: "/var/opt/mssql/data"
+            name: data-volume
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: mssql-data-volume
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
