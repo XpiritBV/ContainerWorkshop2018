@@ -75,10 +75,7 @@ spec:
         - name: LeaderboardApiOptions__BaseUrl
           value: http://svc-leaderboardwebapi
         - name: ApplicationInsights__InstrumentationKey
-          valueFrom:
-            secretKeyRef:
-              name: appinsights-secret
-              key: instrumentation_key
+          value: __aikey__
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -141,6 +138,11 @@ spec:
           value: __keyvaultclientsecret__
         - name: KeyVaultClientID
           value: __keyvaultclientid__
+        - name: ConnectionStrings__LeaderboardContext
+          valueFrom:
+            secretKeyRef:
+              name: connectionstring-secret
+              key: connectionstring
         ports:
         - containerPort: 80
         - containerPort: 443

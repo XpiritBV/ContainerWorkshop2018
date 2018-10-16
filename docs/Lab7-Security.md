@@ -5,7 +5,7 @@ During this lab you will look at a specific security related aspect for containe
 Goals for this lab:
 - [Add support for Azure Key Vault to store secrets](#keyvault)
 - [Store user secrets during development](#usersecrets)
-- [Use Docker Secrets to store Key Vault credentials (experimental)](#dockersecrets)
+- [Use Kubernetes Secrets to store Key Vault credentials](#kubernetessecrets)
 
 ## Secrets and Docker
 
@@ -133,54 +133,38 @@ You need only one of the two entries for the volumes. The entry mapping `$HOME` 
 
 Using user secrets is well suited for development scenarios and single host machine. When running in a cluster for production scenarios it is not recommended. Instead you can use Docker Secrets to add secrets to your cluster host machines. 
 
-## <a name='dockersecrets'></a>(Optional) Using Docker Secrets
+## <a name='kubernetessecrets'></a>(Optional) Using Kubernetes Secrets
 
-> ##### Experimental status
-> Be aware that this part of the lab uses unreleased code. The results might not always be successful. Do not spend too much time on this part if it does not work. On the other hand: do not give up too easily.
+You can store the secrets in a secure way in your cluster. The way this is done depends on the type of orchestrator you have. Kubernetes has its own implementation for secrets. In this final step you are going to create three secrets for the Azure Key Vault connection details, so all secrets are securely stored in a combination of the cluster and the Azure Key Vault.
 
-You can store the secrets in a secure way in your cluster. The way this is done depends on the type of orchestrator you have. For Docker Swarm Mode clusters it uses Docker Secrets. In this final step you are going to create three secrets for the Azure Key Vault connection details, so all secrets are securely stored in a combination of the cluster and the Azure Key Vault. 
-Open a Docker CLI and connect to your cluster. Run the following commands:
-```
-docker secret ls
-echo "https://sdp2017keyvault.vault.azure.net/" | docker secret create KeyVaultName -
-echo "1f31d60b-2f81-42c6-9df6-eb636bd3e9d3" | docker secret create KeyVaultClientID -
-echo "vFwBC9rEtBfO7BNVgeYmSLcpxhTGQfqKG4/ZAoCKhjh=" | docker secret create KeyVaultClientSecret -
-docker secret ls
+Open the file `appsettings.secrets.json` and edit the details of the file a Docker CLI and connect to your cluster. In the deployment manifest add the following to the `spec` section:
+``` yaml
+spec:
+  volumes:
+  - name: secretsettings
+    secret:
+      secretName: secret-appsettings
 ```
 
-Again, you have to replace the values after the `echo` with your specific values. You should see three secrets listed once you have executed these commands.
-
-Edit the constructor of the `Startup` class and include the following code:
-```
-if (env.IsProduction())
-{
-  builder.AddDockerSecrets();
-}
-```
-right before the first call to `builder.Build()`
-
-In the `docker-stack.azure.yml` file you must include a new `secrets` section at the root level. Since you created the secrets from the Docker CLI it is considered external to the composition. You indicate this with the external attribute.
-
-```
-secrets:
-  KeyVaultName:
-    external: true
-  KeyVaultClientID:
-    external: true 
-  KeyVaultClientSecret:
-    external: true 
+Also, under `containers` for the `leaderboardwebapi` deployment definition add:
+``` yaml
+volumeMounts:
+- name: secretsettings
+  mountPath: /app/secrets
+  readOnly: true
 ```
 
-Inside the service for `leaderboardwebapi` of the `docker-stack.azure.yml` file refer to the secrets by adding 
+Redeploy the manifest with:
 ```
-    secrets:
-     - KeyVaultName
-     - KeyVaultClientID
-     - KeyVaultClientSecret
+kubectl apply -f .\gamingwebapp.k8s-static.yaml
 ```
+Open the dashboard again and navigate to the `Secrets` section under `Config and Storage`.
+You should see the new secret there. 
+
+> Note that the secrets here are only base64 encoded and not protected. You can use Managed Service Identities in Azure to run your nodes in the cluster under a known-identity that has access to the Azure Key Vault. Using this strategy you do not need to maintain any secrets to get access to your Key Vault.
 
 ## Wrapup
 
-In this lab you have stored the secrets of your application in the Azure Key Vault. You also moved the remaining secrets, containing the details to get access to the vault, in user secrets for development scenarios. In production these secrets would be stored as Docker secrets. Support for .NET Core is still under development.
+In this lab you have stored the secrets of your application in the Azure Key Vault. You also moved the remaining secrets, containing the details to get access to the vault, in user secrets for development scenarios. In production these secrets are stored as Kubernetes secrets.
 
 Continue with [Lab 8 - VSTS Pipelines](Lab8-VSTSPipelines.md).
