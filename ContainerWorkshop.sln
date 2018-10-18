@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FA099EBE-4
 		docs\Lab7-Security.md = docs\Lab7-Security.md
 		docs\Lab8-VSTSPipelines.md = docs\Lab8-VSTSPipelines.md
 		docs\Lab9-Explore.md = docs\Lab9-Explore.md
+		docs\lab9-Install Prometheus on AKS.md = docs\lab9-Install Prometheus on AKS.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{76C7A3AE-699D-466B-86C8-60C85A4E1B4E}"

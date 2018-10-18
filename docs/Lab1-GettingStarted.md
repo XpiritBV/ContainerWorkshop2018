@@ -83,7 +83,7 @@ Install the Azure Kubernetes Service Command-Line Interface tools by running:
 ```
 az aks install-cli
 ```
-Next, create a service principal to manage the Azure subscription and allow 
+Next, create a service principal to manage the Azure subscription. Store the information that is displayed after creation:
 
 ```
 az ad sp create-for-rbac --name "ContainerWorkshopServicePrincipal" --skip-assignment

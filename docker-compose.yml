@@ -10,7 +10,7 @@ services:
       - "leaderboard.webapi"
 
   leaderboard.webapi:
-    image: ${DOCKER_REGISTRY}leaderboard.webapi
+    image: ${DOCKER_REGISTRY}leaderboardwebapi
     build:
       context: .
       dockerfile: src/Services/Leaderboard.WebAPI/Dockerfile
