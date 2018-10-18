@@ -4,10 +4,10 @@ In this Lab execersise you will install the CoreOS Prometheus Helm chart. This w
 If time permits you can add a custom metrics endpoint to your .NET core service and deploy that to the cluster and enable the monitoring of that service using the custom resource types that got created in your AKS cluster by the deployment of the Prometheus package.
 
 Goals for this lab:
-- [Add Prometheus monitoring support to your AKS cluster](#keyvault)
-- [Explore the monitoring data using the Grafana dashboard](#usersecrets)
-- [Expose a metrics endpoint to your service to provide Prometheus with data](#kubernetessecrets) 
-- [explore the custom resource types to monitor your own service](#kubernetessecrets)
+- [Add Prometheus monitoring support to your AKS cluster]()
+- [Explore the monitoring data using the Grafana dashboard]()
+- [Expose a metrics endpoint to your service to provide Prometheus with data]() 
+- [explore the custom resource types to monitor your own service]()
 
 ## Installing Prometheus
 
@@ -74,7 +74,7 @@ To start forwarding the dashboard to your localhost use the following command in
 ```
 kubectl --namespace monitoring port-forward $(kubectl get pod --namespace monitoring -l prometheus=kube-prometheus -l app=prometheus -o template --template "{{(index .items 0).metadata.name}}") 9090:9090
 ```
-Now browse with your browser of choice to the location: http://localhost/tergets
+Now browse with your browser of choice to the location: http://localhost/targets
 
 this will show you which targets prometheus will scrap for metrics. It also shows a status overview of endpoints if it got data or is dead for a while
 The dashboard should show something like this:

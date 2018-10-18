@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Leaderboard.WebAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Prometheus.Client;
 
 namespace Leaderboard.WebAPI.Controllers
 {
@@ -37,6 +38,9 @@ namespace Leaderboard.WebAPI.Controllers
         [ProducesResponseType(typeof(IEnumerable<HighScore>), 200)]
         public async Task<ActionResult<IEnumerable<HighScore>>> Get(int limit = 0)
         {
+            var _counter = Metrics.CreateCounter("leaderboardcontroller_request_counter", "Counts number of requests on leaderboard controller", "count");
+            _counter.Inc();
+
             var scores = from score in context.Scores
                          group new { score.Gamer.Nickname, score.Points } by score.Game into scoresPerGame
                          select new HighScore()
