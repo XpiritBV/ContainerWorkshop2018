@@ -136,4 +136,4 @@ Try your release pipeline by creating a new release. Check whether the release i
 
 In this lab you have created a build pipeline to build and push the container images for your .NET solution. You used a release pipeline to deploy the composition to a cluster in Azure.
 
-Continue with [Lab 9 - Exploration](Lab9-Explore.md).
+Continue with [Lab 9 - Exploration](Lab9-Prometheus.md).
