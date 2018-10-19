@@ -25,5 +25,4 @@ Additionally, for hosting a container cluster in Microsoft Azure you will need a
 - [Lab 6 - Registries and clusters](docs/Lab6-RegistriesClusters.md)
 - [Lab 7 - Security](docs/Lab7-Security.md)
 - [Lab 8 - VSTS Pipelines](docs/Lab8-VSTSPipelines.md)
-
-
+- [Lab 9 - Install Prometheus on AKS](docs/Lab9-Prometheus.md)
