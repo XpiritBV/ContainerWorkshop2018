@@ -4,13 +4,13 @@ In this Lab execersise you will install the CoreOS Prometheus Helm chart. This w
 If time permits you can add a custom metrics endpoint to your .NET core service and deploy that to the cluster and enable the monitoring of that service using the custom resource types that got created in your AKS cluster by the deployment of the Prometheus package.
 
 Goals for this lab:
-- [Add Prometheus monitoring support to your AKS cluster](#keyvault)
-- [Explore the monitoring data using the Grafana dashboard](#usersecrets)
-- [Expose a metrics endpoint to your service to provide Prometheus with data](#kubernetessecrets) 
+- [Add Prometheus monitoring support to your AKS cluster](#install)
+- [Explore the monitoring data using the Grafana dashboard](#grafana)
+- [Expose a metrics endpoint to your service to provide Prometheus with data](#custommetrics) 
 - [explore the custom resource types to monitor your own service](#kubernetessecrets)
 
 ## Installing Prometheus
-
+<a name="install"></a>
 Before we can install Prometheus, we need Helm package management enabled for our Kubernetes Cluster.
 So we first install Helm. This is done with the following steps:
 
@@ -47,7 +47,7 @@ Now we can find the package by using the command:
 Helm search coreos/prometheus
 ```
 
-this reults in the following output if your repo has been correctly registered:
+this results in the following output if your repo has been correctly registered:
 ```
 NAME                            VERSION DESCRIPTION
 coreos/prometheus               0.0.51  Prometheus instance created by the CoreOS Prome...
@@ -82,6 +82,7 @@ The dashboard should show something like this:
 <img src="images/prometheus-targets.png" />
 
 ## Browsing the Grafana dashboard
+<a name="grafana"></a>
 With the installation of prometheus, also an instance of the grafana dashboarding is installed. We can find the fact this is true by querying all pods in the `monitor` namespace.
 
 When you execute the following command, you will find there is a pod that contains grafana:
@@ -119,7 +120,80 @@ this will result in a similar dashboard as displayed here:
 
 ## Creating your custom .NET core metrics Prometheus endpoint
 
-TODODODODO
+We will now add our own metrics endpoint to our webAPI's. For this we can use the prometheus client libraries that we can get from NuGet.
+The endpoint will be exposed on the path /metrics as per convention of prometheus.
 
-## Configuring Prometheus custom resource to pick up new metrics
+First we start with adding the required NuGet packages to our WebAPI project. We will do this now for the LeaderBoard.WebApi project, but the same can be done for the Gaming WebAPP of course.
+
+Add the NuGet library packages "Prometheus.Client" and "Prometheus.Client.AspNetCore" to the project.
+Next we can make the changes in our code.
+
+Open the Startup.cs file and find the following method:
+```C#
+public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+    ILoggerFactory loggerFactory, LeaderboardContext context)
+{
+
+}
+```
+
+Add at the end of this method the following statement to create the Prometheus Metric Endpoint:
+```
+app.UsePrometheusServer();
+```
+Import the required namespace to make the code compile.
+
+Now we have the endpoint that will provide standard metrics. Below you can see the output of the endpoint when you run it in the debugger:
+
+<img src="images/metrics-output.png"/>
+
+# Create your custom metric
+<a name="custommetrics"></a>
+Now we add a custom metric. We want to keep the count of the number of requests we got on one particular WebApi endpoint. 
+for this we can add a little piece of code to the controllers for the respective endpoints.
+We will start with the `HomeController`
+
+Open the class HomeController.cs and find the following method:
+```C#
+ public IActionResult Index()
+ {
+
+ }
+```
+
+Now add to this method the following code:
+```C#
+var _counter= Metrics.CreateCounter("homecontroller_request_counter", "Counts number of requests on home controller", "count");
+            _counter.Inc();
+```
+This code uses the prometheus client library to create a new metric of type counter. we give it a name, some description and a label.
+The first time this code is called it will create the counter, every next time it will just reuse the counter already created. this is matched on the counter name.
+
+Next we increment the counter. Counter should always be increasing. The only exception to this is resetting to 0. This is permitted in case of the service restarting e.g.
+
+You can repeat this step for all controllers. In the `LeaderboardController` we add the following line of code:
+```C#
+    var _counter = Metrics.CreateCounter("leaderboardcontroller_request_counter", "Counts number of requests on leaderboard controller", "count");
+    _counter.Inc();
+```
+and in the `ScoreController` we add the following line of code:
+
+```C#
+    var _counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
+    _counter.Inc();
+```
+
+Compile the code and debug the code using the docker container support in Visual Studio (F5)
+Now browse to the various endpoints and retrieve some values
+
+Now browse to the metric endpoint. This will result in something similar as the following result:
+
+<img src="images/custom-metrics-output.png">
+
+# Configuring Prometheus custom resource to pick up new metrics
+Now we deploy our new services to the Kubernetes cluster. We want our custom metrics to be picked up by the prometheus server. 
+
+We therefore need to setup a service monitor so it will start scarping our services for their metrics endpoint.
+
+To create the service monitor we need to define the data for this custom resource we added by installing prometheus monitor.
 

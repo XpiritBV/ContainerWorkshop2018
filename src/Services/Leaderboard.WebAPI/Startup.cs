@@ -20,6 +20,8 @@ using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.Extensions.Options;
 using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.Processors;
+using Prometheus.Client;
+using Prometheus.Client.AspNetCore;
 
 namespace Leaderboard.WebAPI
 {
@@ -210,6 +212,9 @@ namespace Leaderboard.WebAPI
             });
 
             app.UseMvcWithDefaultRoute();
+            
+            app.UsePrometheusServer();
+
         }
     }
 }
