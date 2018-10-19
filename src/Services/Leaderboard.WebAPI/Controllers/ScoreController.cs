@@ -24,8 +24,8 @@ namespace Leaderboard.WebAPI.Controllers
         [HttpGet("{game}")]
         public async Task<IEnumerable<Score>> Get(string game)
         {
-            var _counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
-            _counter.Inc();
+            var counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
+            counter.Inc();
 
             var scores = context.Scores.Where(s => s.Game == game).Include(s => s.Gamer);
             return await scores.ToListAsync();

@@ -163,8 +163,8 @@ Open the class HomeController.cs and find the following method:
 
 Now add to this method the following code:
 ```C#
-var _counter= Metrics.CreateCounter("homecontroller_request_counter", "Counts number of requests on home controller", "count");
-            _counter.Inc();
+var counter= Metrics.CreateCounter("homecontroller_request_counter", "Counts number of requests on home controller", "count");
+            counter.Inc();
 ```
 This code uses the prometheus client library to create a new metric of type counter. we give it a name, some description and a label.
 The first time this code is called it will create the counter, every next time it will just reuse the counter already created. this is matched on the counter name.
@@ -173,14 +173,14 @@ Next we increment the counter. Counter should always be increasing. The only exc
 
 You can repeat this step for all controllers. In the `LeaderboardController` we add the following line of code:
 ```C#
-    var _counter = Metrics.CreateCounter("leaderboardcontroller_request_counter", "Counts number of requests on leaderboard controller", "count");
-    _counter.Inc();
+    var counter = Metrics.CreateCounter("leaderboardcontroller_request_counter", "Counts number of requests on leaderboard controller", "count");
+    counter.Inc();
 ```
 and in the `ScoreController` we add the following line of code:
 
 ```C#
-    var _counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
-    _counter.Inc();
+    var counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
+    counter.Inc();
 ```
 
 Compile the code and debug the code using the docker container support in Visual Studio (F5)
