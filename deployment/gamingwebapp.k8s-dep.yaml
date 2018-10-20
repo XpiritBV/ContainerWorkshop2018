@@ -138,11 +138,6 @@ spec:
           value: __keyvaultclientsecret__
         - name: KeyVaultClientID
           value: __keyvaultclientid__
-        - name: ConnectionStrings__LeaderboardContext
-          valueFrom:
-            secretKeyRef:
-              name: connectionstring-secret
-              key: connectionstring
         ports:
         - containerPort: 80
         - containerPort: 443
