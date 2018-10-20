@@ -100,19 +100,11 @@ spec:
       labels:
         app: leaderboardwebapi
     spec:
-      volumes:
-      - name: secretsettings
-        secret:
-          secretName: secret-appsettings
       containers:
       - name: leaderboardwebapi
         terminationMessagePath: "/tmp/leaderboardwebapi-log"
         image: __containerregistry__/leaderboard.webapi:__Build.BuildId__
         imagePullPolicy: Always
-        volumeMounts:
-        - name: secretsettings
-          mountPath: /app/secrets
-          readOnly: true
         livenessProbe:
           httpGet:
             path: /health
