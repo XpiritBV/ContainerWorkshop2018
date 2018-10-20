@@ -122,10 +122,10 @@ Here is the list of variables you need to create:
 Name | Value (example)
 --- | ---
 containerregistry | containerworkshopregistry.azurecr.io
-dns | imworld.5a79006cd4b54431acb1.westeurope.aksapp.io
+dns | containerworkshop.5a79006cd4b54431acb1.westeurope.aksapp.io
 keyvaultclientid | ca5a0aeb-0eec-49a3-a527-a29e2524fa5b
 keyvaultclientsecret | 45gSC1AZ3lkaSUHpsqFfL/+vddtbshVs1umC0IZWsVY=
-keyvaulturl | https://Containerworkshop.vault.azure.net
+keyvaulturl | https://containerworkshop.vault.azure.net
 namespace | workshop
 
 Each of these variable names should be familiar and known to you by now. Set their values. Some of these will be used later.

@@ -1,4 +1,4 @@
-# Lab 9 - Free exploration
+# Lab 10 - Free exploration
 
 Goals for this lab is to experiment with a number of improvements to the solution. You are free to investigate, explore and experiment.
 
