@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "resourceName": {
-      "value": "RetroGaming2019Cluster"
+      "value": "ContainerWorkshopCluster"
     },
     "location": {
       "value": "westeurope"
@@ -15,27 +15,24 @@
       "value": "Standard_DS1_v2"
     },
     "dnsPrefix": {
-      "value": "retrogaming2019"
-    },
-    "sshRSAPublicKey": {
-      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEQfeMx/E91RcgeMN3NqaDxtIiRdZMRWWcuwevZyLtH+2WuovA7nhVaz0x0bDKy+ufY47NqSc4c1rLblBnFonfTv1sm2FIM3P9ap8cjspu8wd+fV/tCEjE+OiIkCw1QxbRLtn+iLkvlBN32c5aPExQGgvMGtNK3DjZgzWeY/GFWWeMb6Ge9+6A6uPKRGhv6lvYQCET+uJ4ch0ufiktPIsKJr3CmwOgVaQgnW0Jcu2hLYzR4M68z6On+wUb+CHx+8I3bJGOkXBfPnCvvDaEULiIwQSPpfa5xcZAfcFvnlYaZyCnFlOGqBIW8JwK5WdkClkxyCEeKDtf56Bq0b100KBL"
+      "value": "ContainerWorkshop2018"
     },
     "servicePrincipalClientId": {
-      "value": "ca5a0aeb-0eec-49a3-a527-a29e2524fa5b"
+      "value": "<your-clientid>"
     },
     "servicePrincipalClientSecret": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/6d45a9d6-675e-4064-8356-08660968c19b/resourceGroups/RetrogGaming2019/providers/Microsoft.KeyVault/vaults/RetroGaming2019KeyVault"
+          "id": "/subscriptions/<your-subscriptionid>/resourceGroups/ContainerWorkshop/providers/Microsoft.KeyVault/vaults/ContainerWorkshopKeyVault"
         },
         "secretName": "retrogamingClientSecret"
       }
     },
     "kubernetesVersion": {
-      "value": "1.11.1"
+      "value": "1.11.3"
     },
     "workspaceName": {
-      "value": "RetroGaming2019LogAnalytics"
+      "value": "ContainerWorkshopLogAnalytics"
     },
     "workspaceRegion": {
       "value": "westeurope"

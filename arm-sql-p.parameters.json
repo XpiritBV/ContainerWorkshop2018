@@ -6,7 +6,7 @@
       "value": "azureuser"
     },
     "serverName": {
-      "value": "retrogaming2019server"
+      "value": "<your-servername>"
     },
     "dbName": {
       "value": "Leaderboard"
@@ -20,7 +20,7 @@
     "administratorLoginPassword": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/6d45a9d6-675e-4064-8356-08660968c19b/resourceGroups/RetroGaming2019/providers/Microsoft.KeyVault/vaults/RetroGaming2019KeyVault"
+          "id": "/subscriptions/<your-subscriptionid>/resourceGroups/ContainerWorkshop/providers/Microsoft.KeyVault/vaults/<your-keyvault>"
         },
         "secretName": "RetroGaming2019DatabasePassword"
       }
