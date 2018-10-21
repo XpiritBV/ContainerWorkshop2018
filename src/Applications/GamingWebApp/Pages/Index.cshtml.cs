@@ -17,13 +17,13 @@ namespace GamingWebApp.Pages
     {
         private readonly ILogger<IndexModel> logger;
         private readonly IOptionsSnapshot<LeaderboardApiOptions> options;
-        private readonly ILeaderboardClient proxy;
+        //private readonly ILeaderboardClient proxy;
 
         public IndexModel(ILeaderboardClient proxy, IOptionsSnapshot<LeaderboardApiOptions> options, ILoggerFactory loggerFactory)
         {
             this.logger = loggerFactory.CreateLogger<IndexModel>();
             this.options = options;
-            this.proxy = proxy;
+            //this.proxy = proxy;
         }
 
         public IEnumerable<HighScore> Scores { get; private set; }
@@ -33,7 +33,7 @@ namespace GamingWebApp.Pages
             Scores = new List<HighScore>();
             try
             {
-                //ILeaderboardClient proxy = RestService.For<ILeaderboardClient>(options.Value.BaseUrl);
+                ILeaderboardClient proxy = RestService.For<ILeaderboardClient>(options.Value.BaseUrl);
                 Scores = await proxy.GetHighScores();
             }
             catch (HttpRequestException ex)
