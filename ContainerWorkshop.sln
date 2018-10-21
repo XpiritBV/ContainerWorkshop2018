@@ -7,19 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C94C2928-D20
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{F46B4D60-20FF-4F43-91FB-FCCA506DAF90}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FA099EBE-43F2-4822-9184-1B526233A4D1}"
-	ProjectSection(SolutionItems) = preProject
-		docs\Lab1-GettingStarted.md = docs\Lab1-GettingStarted.md
-		docs\Lab2-Docker101.md = docs\Lab2-Docker101.md
-		docs\Lab3-DockerizingNETCore.md = docs\Lab3-DockerizingNETCore.md
-		docs\Lab4-Networking.md = docs\Lab4-Networking.md
-		docs\Lab5-Environments.md = docs\Lab5-Environments.md
-		docs\Lab6-RegistriesClusters.md = docs\Lab6-RegistriesClusters.md
-		docs\Lab7-Security.md = docs\Lab7-Security.md
-		docs\Lab8-VSTSPipelines.md = docs\Lab8-VSTSPipelines.md
-		docs\Lab9-Explore.md = docs\Lab9-Explore.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{76C7A3AE-699D-466B-86C8-60C85A4E1B4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{037E1939-589D-433F-A839-D4E36D2FB615}"
@@ -52,7 +39,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployments", "Deployments", "{045E1A9A-58F4-430A-B8CF-B5F25CC104F7}"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.secrets.json = appsettings.secrets.json
+		deployment\dashboard-admin.yaml = deployment\dashboard-admin.yaml
 		deployment\gamingwebapp.k8s-dep.yaml = deployment\gamingwebapp.k8s-dep.yaml
+		deployment\gamingwebapp.k8s-static.yaml = deployment\gamingwebapp.k8s-static.yaml
 		deployment\gamingwebapp.secret.yaml = deployment\gamingwebapp.secret.yaml
 	EndProjectSection
 EndProject
