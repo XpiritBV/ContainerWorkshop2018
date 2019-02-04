@@ -181,7 +181,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: containerworkhop.__httpapplicationroutingdomain__
+  - host: containerworkshop.__httpapplicationroutingdomain__
     http:
       paths:
       - path: /
