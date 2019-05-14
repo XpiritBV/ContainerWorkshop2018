@@ -18,4 +18,4 @@ services:
       - "sql.data"
 
   sql.data:
-    image: microsoft/mssql-server-linux
+    image: mcr.microsoft.com/mssql/server
