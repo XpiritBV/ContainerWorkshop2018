@@ -37,7 +37,7 @@ services:
       - backend
 
   sql.data:
-    image: microsoft/mssql-server-linux
+    image: mcr.microsoft.com/mssql/server
     environment:
       - SA_PASSWORD=Pass@word
       - MSSQL_PID=Developer
