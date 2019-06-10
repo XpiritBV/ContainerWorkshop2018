@@ -7,7 +7,6 @@ using Leaderboard.WebAPI.Infrastructure;
 using Leaderboard.WebAPI.Models;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Prometheus.Client;
 
 namespace Leaderboard.WebAPI.Controllers
 {
@@ -24,9 +23,6 @@ namespace Leaderboard.WebAPI.Controllers
         [HttpGet("{game}")]
         public async Task<IEnumerable<Score>> Get(string game)
         {
-            var counter = Metrics.CreateCounter("scorecontroller_request_counter", "Counts number of requests on score controller", "count");
-            counter.Inc();
-
             var scores = context.Scores.Where(s => s.Game == game).Include(s => s.Gamer);
             return await scores.ToListAsync();
         }

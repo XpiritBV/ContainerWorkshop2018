@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27705.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C94C2928-D205-4815-9740-048D6D8335BF}"
 EndProject
@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployments", "Deployments"
 		deployment\gamingwebapp.k8s-dep.yaml = deployment\gamingwebapp.k8s-dep.yaml
 		deployment\gamingwebapp.k8s-static.yaml = deployment\gamingwebapp.k8s-static.yaml
 		deployment\gamingwebapp.secret.yaml = deployment\gamingwebapp.secret.yaml
+		deployment\namespace.k8s-dep.yaml = deployment\namespace.k8s-dep.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{0E68944E-80E9-441D-A1F3-88998A09FFDE}"
