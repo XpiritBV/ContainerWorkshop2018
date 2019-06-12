@@ -18,6 +18,8 @@ using Microsoft.Extensions.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.Processors;
 
@@ -81,6 +83,7 @@ namespace Leaderboard.WebAPI
             ConfigureOpenApi(services);
             ConfigureSecurity(services);
             ConfigureHealth(services);
+            ConfigureSerialization();
 
             services.AddMvc()
                 .AddXmlSerializerFormatters()
@@ -170,6 +173,20 @@ namespace Leaderboard.WebAPI
                 };
             });
         }
+
+        private static void ConfigureSerialization()
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
