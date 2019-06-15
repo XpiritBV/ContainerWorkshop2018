@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 14069
 EXPOSE 44325
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 COPY src/Applications/GamingWebApp/GamingWebApp.csproj src/Applications/GamingWebApp/
 RUN dotnet restore src/Applications/GamingWebApp/GamingWebApp.csproj
