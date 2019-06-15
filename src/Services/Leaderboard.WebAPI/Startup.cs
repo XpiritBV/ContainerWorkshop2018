@@ -18,8 +18,10 @@ using Microsoft.Extensions.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NSwag.AspNetCore;
-using NSwag.SwaggerGeneration.Processors;
+using NSwag.Generation.Processors;
 
 namespace Leaderboard.WebAPI
 {
@@ -67,12 +69,12 @@ namespace Leaderboard.WebAPI
                 string connectionString =
                     Configuration.GetConnectionString("LeaderboardContext");
                 options.UseSqlServer(connectionString, sqlOptions =>
-                 {
-                     sqlOptions.EnableRetryOnFailure(
-                     maxRetryCount: 5,
-                     maxRetryDelay: TimeSpan.FromSeconds(30),
-                     errorNumbersToAdd: null);
-                 });
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+                });
             });
 
             ConfigureFeatures(services);
@@ -81,6 +83,7 @@ namespace Leaderboard.WebAPI
             ConfigureOpenApi(services);
             ConfigureSecurity(services);
             ConfigureHealth(services);
+            ConfigureSerialization();
 
             services.AddMvc()
                 .AddXmlSerializerFormatters()
@@ -171,6 +174,20 @@ namespace Leaderboard.WebAPI
             });
         }
 
+        private static void ConfigureSerialization()
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+        }
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory, LeaderboardContext context)
@@ -191,23 +208,8 @@ namespace Leaderboard.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
-            {
-                settings.SwaggerRoute = "/swagger/v1/swagger.json";
-                settings.ShowRequestHeaders = true;
-                settings.DocExpansion = "list";
-                settings.UseJsonEditor = true;
-                settings.PostProcess = document =>
-                {
-                    document.BasePath = "/";
-                };
-                settings.GeneratorSettings.Title = "Leaderboard API";
-                settings.GeneratorSettings.Description = "Leaderboard 2019 Web API";
-                settings.GeneratorSettings.Version = "1.0";
-                settings.GeneratorSettings.OperationProcessors.Add(
-                    new ApiVersionProcessor() { IncludedVersions = { "1.0" } }
-                );
-            });
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseMvcWithDefaultRoute();
         }
