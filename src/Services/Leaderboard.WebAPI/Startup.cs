@@ -21,7 +21,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NSwag.AspNetCore;
-using NSwag.SwaggerGeneration.Processors;
+using NSwag.Generation.Processors;
 
 namespace Leaderboard.WebAPI
 {
@@ -208,23 +208,8 @@ namespace Leaderboard.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
-            {
-                settings.SwaggerRoute = "/swagger/v1/swagger.json";
-                settings.ShowRequestHeaders = true;
-                settings.DocExpansion = "list";
-                settings.UseJsonEditor = true;
-                settings.PostProcess = document =>
-                {
-                    document.BasePath = "/";
-                };
-                settings.GeneratorSettings.Title = "Leaderboard API";
-                settings.GeneratorSettings.Description = "Leaderboard 2019 Web API";
-                settings.GeneratorSettings.Version = "1.0";
-                settings.GeneratorSettings.OperationProcessors.Add(
-                    new ApiVersionProcessor() { IncludedVersions = { "1.0" } }
-                );
-            });
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseMvcWithDefaultRoute();
         }
