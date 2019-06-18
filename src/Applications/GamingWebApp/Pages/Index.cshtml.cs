@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GamingWebApp.Proxy;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -17,12 +19,16 @@ namespace GamingWebApp.Pages
     {
         private readonly ILogger<IndexModel> logger;
         private readonly IOptionsSnapshot<LeaderboardApiOptions> options;
+        private readonly TelemetryClient telemetryClient;
         private readonly ILeaderboardClient proxy;
 
-        public IndexModel(IOptionsSnapshot<LeaderboardApiOptions> options, ILeaderboardClient proxy, ILoggerFactory loggerFactory)
+        public IndexModel(IOptionsSnapshot<LeaderboardApiOptions> options,
+            TelemetryClient telemetryClient,
+            ILeaderboardClient proxy, ILoggerFactory loggerFactory)
         {
             this.logger = loggerFactory.CreateLogger<IndexModel>();
             this.options = options;
+            this.telemetryClient = telemetryClient;
             this.proxy = proxy;
         }
 
@@ -34,7 +40,18 @@ namespace GamingWebApp.Pages
             try
             {
                 //ILeaderboardClient proxy = RestService.For<ILeaderboardClient>(options.Value.BaseUrl);
-                Scores = await proxy.GetHighScores();
+                using (var operation = telemetryClient.StartOperation<RequestTelemetry>("SubmitFlowInstruction"))
+                {
+                    try
+                    {
+                        Scores = await proxy.GetHighScores();
+                    }
+                    catch
+                    {
+                        operation.Telemetry.Success = false;
+                        throw;
+                    }
+                }
             }
             catch (HttpRequestException ex)
             {
