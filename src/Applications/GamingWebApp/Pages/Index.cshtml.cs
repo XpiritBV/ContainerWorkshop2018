@@ -40,7 +40,7 @@ namespace GamingWebApp.Pages
             try
             {
                 //ILeaderboardClient proxy = RestService.For<ILeaderboardClient>(options.Value.BaseUrl);
-                using (var operation = telemetryClient.StartOperation<RequestTelemetry>("SubmitFlowInstruction"))
+                using (var operation = telemetryClient.StartOperation<RequestTelemetry>("LeaderboardWebAPICall"))
                 {
                     try
                     {
