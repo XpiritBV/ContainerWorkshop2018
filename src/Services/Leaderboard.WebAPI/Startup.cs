@@ -127,13 +127,13 @@ namespace Leaderboard.WebAPI
 
         private void ConfigureTelemetry(IServiceCollection services)
         {
+            services.AddSingleton<ITelemetryInitializer, ServiceNameInitializer>();
             var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
             services.AddApplicationInsightsTelemetry(options =>
             {
                 options.DeveloperMode = env.IsDevelopment();
                 options.InstrumentationKey = Configuration["ApplicationInsights:InstrumentationKey"];
             });
-            TelemetryConfiguration.Active.TelemetryInitializers.Add(new ServiceNameInitializer());
         }
 
         private void ConfigureSecurity(IServiceCollection services)
