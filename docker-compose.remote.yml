@@ -10,9 +10,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - LeaderboardApiOptions__BaseUrl=http://leaderboardwebapi:8080
+      - LeaderboardApiOptions__BaseUrl=http://leaderboardwebapi
     ports:
-      - "8080:8080"
+      - "80:8080"
 
   leaderboardwebapi:
     image: xpiritbv/leaderboard.webapi:latest
@@ -25,7 +25,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:8080
       - ConnectionStrings__LeaderboardContext=Server=sql;Database=Leaderboard;User Id=sa;Password=Pass@word;Trusted_Connection=False
     ports:
-      - "8081:8080"
+      - "80:8080"
 
   sql:
     image: mcr.microsoft.com/mssql/server
@@ -36,7 +36,7 @@ services:
       - MSSQL_PID=Developer
       - ACCEPT_EULA=Y
     ports:
-      - "1433:14330"
+      - "14330:1433"
 
 networks:
   shared:
