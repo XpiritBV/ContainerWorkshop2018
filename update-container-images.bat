@@ -12,8 +12,9 @@ pushd src\Services\Leaderboard.WebAPI
 dotnet build -c Debug Leaderboard.WebAPI.csproj
 dotnet publish -o "bin/Debug/netcoreapp2.2/publish"
 
-docker build -f Dockerfile.local -t leaderboard.webapi:latest -t xpiritbv/leaderboard.webapi:latest .
+docker build -f Dockerfile.local -t leaderboard.webapi:latest -t xpiritbv/leaderboard.webapi:latest -t xpiritbv/leaderboardwebapi:latest .
 popd
 
 docker push xpiritbv/gamingwebapp:latest
 docker push xpiritbv/leaderboard.webapi:latest
+docker push xpiritbv/leaderboardwebapi:latest
