@@ -23,9 +23,4 @@
     <PackageReference Include="NSwag.AspNetCore" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\Microsoft.AspNetCore.HealthChecks\Microsoft.AspNetCore.HealthChecks.csproj" />
-    <ProjectReference Include="..\..\Extensions\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
-  </ItemGroup>
-
 </Project>

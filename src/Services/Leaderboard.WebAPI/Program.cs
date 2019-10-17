@@ -19,7 +19,6 @@ namespace Leaderboard.WebAPI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseHealthChecks("/health", TimeSpan.FromSeconds(3)) // Or to host on a separate port: .UseHealthChecks(port)
                 .UseStartup<Startup>();
     }
 }

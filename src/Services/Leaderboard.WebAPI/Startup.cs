@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using Microsoft.Extensions.Options;
@@ -98,31 +97,7 @@ namespace Leaderboard.WebAPI
 
         private void ConfigureHealth(IServiceCollection services)
         {
-            services.AddHealthChecks(checks =>
-            {
-                checks.AddHealthCheckGroup(
-                        "memory",
-                        group => group
-                            .AddPrivateMemorySizeCheck(2000000000)
-                            .AddVirtualMemorySizeCheck(30000000000000)
-                            .AddWorkingSetCheck(2000000000),
-                        CheckStatus.Unhealthy
-                    );
-
-                // Use feature toggle to add this functionality
-                var feature = services.BuildServiceProvider().GetRequiredService<AdvancedHealthFeature>();
-                if (feature.FeatureEnabled)
-                {
-                    checks.AddHealthCheckGroup(
-                        "memory",
-                        group => group
-                            .AddPrivateMemorySizeCheck(200000000) // Maximum private memory
-                            .AddVirtualMemorySizeCheck(3000000000000)
-                            .AddWorkingSetCheck(200000000),
-                        CheckStatus.Unhealthy
-                    );
-                }
-            });
+            
         }
 
         private void ConfigureTelemetry(IServiceCollection services)
